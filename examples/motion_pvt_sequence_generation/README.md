@@ -5,7 +5,7 @@
 This repository contains code to complement our article [Motion Planning with Position-Velocity-Time](https://www.zaber.com/articles/motion-planning-with-position-velocity-time). The cubic polynomial PVT algorithm
 described in the article is implemented in Python, along with helper functions to automatically
 generate missing parameters, plot the generated path and trajectory, and save the results
-to a CSV file that is compatible with [Zaber Launcher](https://software.zaber.com/zaber-launcher/download)'s PVT Viewer App.
+to a CSV file that is compatible with [Zaber Launcher](https://zaber.com/zaber-launcher#download)'s PVT Viewer App.
 
 ## Hardware Requirements
 
@@ -15,7 +15,7 @@ However, the underlying math and generated trajectories could be utilized on alm
 Notes:
 
 - This code requires Zaber devices with firmware version 7.33 or higher.
-- This code can be used to generate PVT sequence CSV files compatible with [Zaber Launcher](https://software.zaber.com/zaber-launcher/download)'s PVT Viewer App.
+- This code can be used to generate PVT sequence CSV files compatible with [Zaber Launcher](https://zaber.com/zaber-launcher#download)'s PVT Viewer App.
 
 ## Dependencies
 

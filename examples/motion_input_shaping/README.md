@@ -164,4 +164,4 @@ Class Methods:
 
 ## Troubleshooting Tips
 
-- If you encounter an error when running one of the example scripts, check the Serial Port number (ex. COM5) using [Zaber Launcher](https://software.zaber.com/zaber-launcher/download).
+- If you encounter an error when running one of the example scripts, check the Serial Port number (ex. COM5) using [Zaber Launcher](https://zaber.com/zaber-launcher#download).
