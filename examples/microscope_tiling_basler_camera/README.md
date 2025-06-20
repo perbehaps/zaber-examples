@@ -26,7 +26,7 @@ Edit the following constants in the script to fit your setup before running the 
 
 - `SERIAL_PORT`: the serial port that your microscope is connected to.
 For more information on how to identify the serial port, see [Find the right serial port name](https://software.zaber.com/motion-library/docs/guides/communication/find_right_port).
-- `TOP_LEFT`: top left point of sample region (can be copied directly from microscope app in [Zaber Launcher](https://software.zaber.com/zaber-launcher/download))
+- `TOP_LEFT`: top left point of sample region (can be copied directly from microscope app in [Zaber Launcher](https://zaber.com/zaber-launcher#download))
 - `BOTTOM_RIGHT`: bottom right point of sample region (also can be copied)
 - `OVERLAP_H`: desired decimal percentage of horizontal overlap between neighbouring tiles
 - `OVERLAP_V`: desired decimal percentage of vertical overlap between neighbouring tiles
@@ -48,7 +48,7 @@ This example doesn't attempt to perform any sort of automated pixel calibration,
 
 ### Focus
 
-This example doesn't attempt to adjust focus while tiling. If your sample's height is uniform, then focus can be set manually from the basic controls or microscope app available in [Zaber Launcher](https://software.zaber.com/zaber-launcher/download).
+This example doesn't attempt to adjust focus while tiling. If your sample's height is uniform, then focus can be set manually from the basic controls or microscope app available in [Zaber Launcher](https://zaber.com/zaber-launcher#download).
 
 If your sample's height is non-uniform, then it would be worth looking at the [focus map](../microscope_autofocus/) and [autofocus examples](../microscope_autofocus/) in this repository. Logic for focussing the objective could be added below the call to `AxisGroup.move_absolute` in the `capture_images` function in main:
 
