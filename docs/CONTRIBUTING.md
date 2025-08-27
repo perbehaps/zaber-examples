@@ -50,6 +50,7 @@ You can start with our [example template](../examples/_template/).
 9. Add an image to be used with the link to the article from the main website. The picture should be less than 1000
 pixels wide and have a horizontal aspect. Reference it with the `picture:` key in `article.yml`. The image
 doesn't have to be used in the readme, but ideally should be similar to a readme image if there are any suitable.
+For more guidelines on the picture (banner), consult: [iWiki](https://iwiki.izaber.com/Marketing_Handbook/Content/Articles).
 10. Run through the appropriate [Language Checklist](#language-checklist)
 11. Do a Pull Request
 
