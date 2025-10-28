@@ -21,11 +21,11 @@ from zaber_motion.ascii import Connection, Axis
 
 log = logging.getLogger(__name__)
 
-SERIAL_PORT = "COMx"
+SERIAL_PORT = "COM8"
 
 # Map joystick axes to Zaber (<device_addresse>, <axis_number>).
 X_AXIS = (1, 1)
-Y_AXIS = (1, 2)
+Y_AXIS = (2, 1)
 
 # Constant for analog stick range from the inputs library.
 MAX_DEFLECTION = 32768
@@ -130,7 +130,8 @@ def main() -> None:
         except MotionLibException:
             log.error("Failed to identify the Y axis at address /%d %d", Y_AXIS[0], Y_AXIS[1])
             return
-
+        print(x_axis.settings.get("maxspeed"))
+        print(y_axis.settings.get("maxspeed"))
         read_loop(x_axis, y_axis)
 
 

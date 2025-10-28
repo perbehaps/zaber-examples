@@ -14,7 +14,7 @@ from zaber_motion.ascii import Connection, Axis, AxisType
 
 from .ui import UiMainWindow
 
-SERIAL_PORT = "COMx"
+SERIAL_PORT = "COM8"
 AXIS_NUM = 1
 
 
