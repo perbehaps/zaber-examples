@@ -30,12 +30,14 @@ Y_AXIS = (2, 1)
 # Constant for analog stick range from the inputs library.
 MAX_DEFLECTION = 32768
 
-# Define a dead zone that maps to zero, with linear increase from the edge.
-DEAD_ZONE = MAX_DEFLECTION / 5
+# Tweakable parameters to increase responsiveness/speed:
+SPEED_GAIN = 1000            # multiply computed velocity (set >1 to increase speed)
+RESPONSE_EXPONENT = 2       # 1 = linear, 2 = quadratic, 3 = cubic (current)
+DEAD_ZONE = MAX_DEFLECTION / 5  # smaller value = more sensitive around center
 
 
 def scale_deflection(deflection: float) -> float:
-    """Map stick deflection to the range -1 to 1, with dead zone and curve."""
+    """Map stick deflection to the range -1 to 1, with dead zone and configurable curve."""
     defl_abs = math.fabs(deflection)
     if defl_abs < 1:
         return 0
@@ -43,7 +45,7 @@ def scale_deflection(deflection: float) -> float:
     sign = deflection / defl_abs
     scaled = (max(DEAD_ZONE, defl_abs) - DEAD_ZONE) / (MAX_DEFLECTION - DEAD_ZONE)
     log.info(str(scaled))
-    return sign * math.pow(scaled, 3)
+    return sign * math.pow(scaled, RESPONSE_EXPONENT)
 
 
 def read_loop(x_axis: Axis, y_axis: Axis) -> None:
@@ -99,8 +101,21 @@ def read_loop(x_axis: Axis, y_axis: Axis) -> None:
                     x_axis.stop(wait_until_idle=False)
                     y_axis.stop(wait_until_idle=False)
                 else:
-                    x_speed = scale_deflection(input_states["ABS_X"]) * max_speed_x
-                    y_speed = scale_deflection(input_states["ABS_Y"]) * max_speed_y
+                    # compute scaled deflection in [-1,1]
+                    x_raw = scale_deflection(input_states["ABS_X"])
+                    y_raw = scale_deflection(input_states["ABS_Y"])
+
+                    # apply gain and convert to device velocity, then clamp to device max
+                    x_speed = x_raw * max_speed_x * SPEED_GAIN
+                    y_speed = y_raw * max_speed_y * SPEED_GAIN
+
+                    # clamp to supported range to avoid invalid requests
+                    def clamp(v, limit):
+                        return max(min(v, limit), -limit)
+
+                    x_speed = clamp(x_speed, max_speed_x)
+                    y_speed = clamp(y_speed, max_speed_y)
+
                     log.info("Changing velocities to %s and %s.", x_speed, y_speed)
                     x_axis.move_velocity(x_speed)
                     y_axis.move_velocity(y_speed)
