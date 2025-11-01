@@ -5,7 +5,7 @@ from random import shuffle
 from zaber_motion.ascii import Connection
 from zaber_motion import Units
 
-SERIAL_PORT = "COMx"  # Change to appropriate comm port
+SERIAL_PORT = "COM8"  # Change to appropriate comm port
 DEVICE_NUMBER = 1  # The order of the device in the device chain
 
 
