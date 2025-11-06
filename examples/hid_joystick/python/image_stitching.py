@@ -77,11 +77,11 @@ def goto_position(x: float, y: float, x_axis: Axis, y_axis: Axis, units: Units =
     """
     log.info("Goto absolute position X=%.6g, Y=%.6g %s", x, y, units.name)
     try:
-        x_axis.move_absolute(x, units, wait_until_idle=False)
+        x_axis.move_absolute(x, units, wait_until_idle=True)
         # small delay between commands to avoid command overlap on bus
         time.sleep(INTER_MOVE_DELAY)
-        y_axis.move_absolute(y, units, wait_until_idle=False)
-        wait_for_axes_idle(x_axis, y_axis)
+        y_axis.move_absolute(y, units, wait_until_idle=True)
+        # wait_for_axes_idle(x_axis, y_axis)
     except MotionLibException:
         log.error("Error during goto_position", exc_info=True)
         raise
@@ -129,6 +129,7 @@ def raster_scan(
                 log.info("Row %d / %d -> moving to (%.6g, %.6g)", row + 1, y_steps, x_pos, y_pos)
                 goto_position(x_pos, y_pos, x_axis, y_axis, units)
                 # place for capture / measurement call
+
                 time.sleep(INTER_MOVE_DELAY)
 
     except KeyboardInterrupt:
@@ -146,10 +147,10 @@ def main() -> None:
     # Example scan parameters (adjust to your experiment)
     # x_start = x_axis.get_position(STAGE_UNITS)
     x_steps = 10
-    x_step_size = 0.1  # mm
+    x_step_size = 1  # mm
     # y_start = y_axis.get_position(STAGE_UNITS)
     y_steps = 10
-    y_step_size = 0.1  # mm
+    y_step_size = 1  # mm
 
     # Connect and run scan
     # Use context manager so connection closes cleanly

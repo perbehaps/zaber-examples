@@ -36,7 +36,7 @@ MAX_DEFLECTION = 32768
 
 # Tweakable parameters to increase responsiveness/speed:
 SPEED_GAIN = 1          # multiply computed velocity (set >1 to increase speed)
-RESPONSE_EXPONENT = 2       # 1 = linear, 2 = quadratic, 3 = cubic (current)
+RESPONSE_EXPONENT = 3       # 1 = linear, 2 = quadratic, 3 = cubic (current)
 DEAD_ZONE = MAX_DEFLECTION / 5  # smaller value = more sensitive around center
 
 
@@ -64,7 +64,13 @@ def joystick_worker(x_axis: Axis, y_axis: Axis, pos: dict, lock: threading.Lock,
     }
 
     max_speed_x = x_axis.settings.get("maxspeed")
+    # print(max_speed_x)
+    x_axis.settings.set("maxspeed", 32768000000.0)
+    print(max_speed_x)
     max_speed_y = y_axis.settings.get("maxspeed")
+    # print(max_speed_y)
+    y_axis.settings.set("maxspeed", 32768000000.0)
+    print(max_speed_y)
 
     log.info("Joystick thread started. Use left stick to move, X to home, B to stop, Start to exit.")
     while not stop_event.is_set():
@@ -90,10 +96,11 @@ def joystick_worker(x_axis: Axis, y_axis: Axis, pos: dict, lock: threading.Lock,
             try:
                 # Homing
                 if input_states["BTN_WEST"] == 1:
-                    log.info("Homing (non-blocking start).")
-                    x_axis.home(wait_until_idle=False)
-                    y_axis.home(wait_until_idle=False)
+                    log.info("Homing (blocking start).")
+                    x_axis.home(wait_until_idle=True)
+                    y_axis.home(wait_until_idle=True)
                     # do not block waiting here so other inputs can interrupt homing
+                    log.info("Device homed.")
                 # Stop
                 elif input_states["BTN_EAST"] == 1:
                     log.info("Stopping")
